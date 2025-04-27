@@ -1,10 +1,13 @@
+import { Routes, Route } from 'react-router-dom';
 import Launches from './components/Launches';
-import './components/Launches.css';
+import LaunchDetail from './components/LaunchDetail';
+
 function App() {
   return (
-    <div>
-      <Launches />
-    </div>
+    <Routes>
+      <Route path="/" element={<Launches />} />
+      <Route path="/launch/:id" element={<LaunchDetail />} />
+    </Routes>
   );
 }
 

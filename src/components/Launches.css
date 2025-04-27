@@ -2,7 +2,7 @@
     padding: 2rem;
     max-width: 1200px;
     margin: 0 auto;
-    color: white;
+    color: rgb(137, 76, 76);
   }
   
   .launch-card {
@@ -31,3 +31,20 @@
     display: flex;
     flex-direction: column;
   }
+
+  .extra-details {
+    margin-top: 1rem;
+    background: #2c2c2c;
+    padding: 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+  }
+  
+  .extra-details a {
+    display: block;
+    color: #00bcd4;
+    margin-top: 0.5rem;
+    text-decoration: underline;
+  }
+
+  
