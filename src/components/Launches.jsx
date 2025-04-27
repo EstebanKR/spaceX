@@ -43,7 +43,6 @@ function Launches() {
 
   if (loading) return <p>Cargando lanzamientos...</p>;
 
-  // 🔥 Buscar sobre los lanzamientos
   let resultados = launches;
 
   if (busqueda.length >= 3) {
@@ -81,7 +80,7 @@ function Launches() {
   <div
     key={launch.id}
     className="launch-card"
-    onClick={() => navigate(`/launch/${launch.id}`)}  // 🔥 Aquí
+    onClick={() => navigate(`/launch/${launch.id}`)}  
     style={{ cursor: 'pointer' }}
   >
     {launch.links.patch.small && (
