@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
-import './Launches.css';
+import './styles.css'; 
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
 
 function Launches() {
   const [launches, setLaunches] = useState([]);
@@ -24,9 +26,9 @@ function Launches() {
       .then(response => response.json())
       .then(data => {
         if (category === 'success') {
-          setLaunches(data.filter(launch => launch.success));
+          setLaunches(data.filter(detalle => detalle.success));
         } else if (category === 'failed') {
-          setLaunches(data.filter(launch => launch.success === false));
+          setLaunches(data.filter(detalle => detalle.success === false));
         } else if (category === 'firsts') {
           const sorted = [...data].sort((a, b) => new Date(a.date_utc) - new Date(b.date_utc));
           setLaunches(sorted.slice(0, 10));
@@ -46,8 +48,8 @@ function Launches() {
   let resultados = launches;
 
   if (busqueda.length >= 3) {
-    resultados = launches.filter(launch =>
-      launch.name.toLowerCase().includes(busqueda.toLowerCase())
+    resultados = launches.filter(detalle =>
+      detalle.name.toLowerCase().includes(busqueda.toLowerCase())
     );
   }
 
@@ -66,41 +68,43 @@ function Launches() {
 
         {/* Menú de categorías */}
         <div className="menu">
-          <button onClick={() => setCategory('all')}>Todos</button>
-          <button onClick={() => setCategory('success')}>Éxitos</button>
-          <button onClick={() => setCategory('failed')}>Fallidos</button>
-          <button onClick={() => setCategory('upcoming')}>Próximos</button>
-          <button onClick={() => setCategory('past')}>Pasados</button>
-          <button onClick={() => setCategory('firsts')}>Primeros lanzamientos</button>
-        </div>
+  <button onClick={() => setCategory('all')}>Todos</button>
+  <button onClick={() => setCategory('success')}>Éxitos</button>
+  <button onClick={() => setCategory('failed')}>Fallidos</button>
+  <button onClick={() => setCategory('upcoming')}>Próximos</button>
+  <button onClick={() => setCategory('past')}>Pasados</button>
+  <button onClick={() => setCategory('firsts')}>Primeros lanzamientos</button>
+  <Link to="/usuarios">Usuarios</Link>
+</div>
+
 
     
 
-{resultados.map((launch) => (
+{resultados.map((detalle) => (
   <div
-    key={launch.id}
-    className="launch-card"
-    onClick={() => navigate(`/launch/${launch.id}`)}  
+    key={detalle.id}
+    className="detalle-card"
+    onClick={() => navigate(`/detalle/${detalle.id}`)}  
     style={{ cursor: 'pointer' }}
   >
-    {launch.links.patch.small && (
-      <img src={launch.links.patch.small} alt={launch.name} className="launch-image" />
+    {detalle.links.patch.small && (
+      <img src={detalle.links.patch.small} alt={detalle.name} className="detalle-image" />
     )}
-    <div className="launch-details">
-      <h2>{launch.name}</h2>
-      <p>Fecha: {new Date(launch.date_utc).toLocaleDateString()}</p>
+    <div className="detalle-details">
+      <h2>{detalle.name}</h2>
+      <p>Fecha: {new Date(detalle.date_utc).toLocaleDateString()}</p>
       <p>
-        Estado: {launch.success === null ? "Desconocido" : launch.success ? "✅ Exitoso" : "❌ Fallido"}
+        Estado: {detalle.success === null ? "Desconocido" : detalle.success ? "✅ Exitoso" : "❌ Fallido"}
       </p>
 
       {/* Mostrar más detalles si está seleccionado */}
-      {selectedLaunchId === launch.id && (
+      {selectedLaunchId === detalle.id && (
         <div className="extra-details">
-          <p><strong>Flight Number:</strong> {launch.flight_number}</p>
-          <p><strong>Rocket ID:</strong> {launch.rocket}</p>
-          <p><strong>Detalles:</strong> {launch.details ? launch.details : "Sin descripción disponible"}</p>
-          {launch.links.webcast && (
-            <a href={launch.links.webcast} target="_blank" rel="noopener noreferrer">
+          <p><strong>Flight Number:</strong> {detalle.flight_number}</p>
+          <p><strong>Rocket ID:</strong> {detalle.rocket}</p>
+          <p><strong>Detalles:</strong> {detalle.details ? detalle.details : "Sin descripción disponible"}</p>
+          {detalle.links.webcast && (
+            <a href={detalle.links.webcast} target="_blank" rel="noopener noreferrer">
               Ver lanzamiento en YouTube
             </a>
           )}
